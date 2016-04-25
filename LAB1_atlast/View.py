@@ -6,7 +6,7 @@ def menu():
     Shows menu
     :return:
     """
-    print("1.Show")
+    print("\n1.Show")
     print("2.Add")
     print("3.Edit")
     print("4.Delete")
