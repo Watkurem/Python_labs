@@ -1,0 +1,4 @@
+# Pycache is useless in git
+__pycache__
+# I dunno what this shiet even is, better ignore it too then
+.idea
