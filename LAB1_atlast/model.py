@@ -40,13 +40,6 @@ class Match:
         print(str(self.dd) + '.' + str(self.mm) + '.' + str(self.yy))
 
 
-match1 = Match("Ukraine", "Russia", 2, 0, "World Cup", 20, 10, 2016)
-match2 = Match("England", "Germany", 1, 2, "World Cup", 22, 10, 2016)
-match3 = Match("Spain", "Italy", 2, 2, "Euro2016", 5, 6, 2016)
-
-match_history = [match1, match2, match3]
-
-
 class MatchList:
     def __init__(self, *matches):
         self.matches = list(matches)
@@ -70,3 +63,11 @@ class MatchList:
             return self.matches.pop(idx)
         except IndexError:
             return None
+
+
+match_history = MatchList(Match("Ukraine", "Russia", 2, 0,
+                                "World Cup", 20, 10, 2016),
+                          Match("England", "Germany", 1, 2,
+                                "World Cup", 22, 10, 2016),
+                          Match("Spain", "Italy", 2, 2,
+                                "Euro2016", 5, 6, 2016))
