@@ -54,9 +54,9 @@ def create():
     score1 = input(" Score1: ")
     score2 = input(" Score2: ")
     tournament = input(" Tournament name: ")
-    dd = input(" Enter day :")
-    mm = input(" Enter month :")
-    yy = input(" Enter year :")
+    dd = input(" Enter day: ")
+    mm = input(" Enter month: ")
+    yy = input(" Enter year: ")
     model.match_history.create(team1, team2, score1, score2, tournament, dd, mm, yy)
 
 
