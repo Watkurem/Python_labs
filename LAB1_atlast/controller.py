@@ -23,4 +23,10 @@ def choose_menu():
         print("Please, type a number from 1 to 5")
     choose_menu()
 
-choose_menu()
+
+def main():
+    choose_menu()
+
+
+if __name__ == '__main__':
+    main()
