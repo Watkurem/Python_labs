@@ -2,6 +2,8 @@
 # -*- coding: utf-8 -*-
 
 from view import *
+import configparser
+import sys
 
 
 def choose_menu():
@@ -25,6 +27,28 @@ def choose_menu():
 
 
 def main():
+    config = configparser.ConfigParser()
+    config.read(CONFIG)
+    try:
+        config['DEFAULT']['model']
+    except KeyError:
+        config['DEFAULT']['model'] = 'dummy'
+        with open(CONFIG, 'w') as fil:
+            config.write(fil)
+
+    if config['DEFAULT']['model'] == 'sqlite':
+        model.ctr = model.MatchSqliteDb
+    elif config['DEFAULT']['model'] == 'mysql':
+        model.ctr = model.MatchMysqlDb
+    elif config['DEFAULT']['model'] == 'postgresql':
+        model.ctr = model.MatchPostgresqlDb
+    elif config['DEFAULT']['model'] == 'dummy':
+        model.ctr = model.MatchList
+    else:
+        print('WARNING: Config is broken!')
+        sys.exit(1)
+
+    model.init()
     choose_menu()
 
 
