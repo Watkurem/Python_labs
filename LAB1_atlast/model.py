@@ -42,18 +42,23 @@ class Match:
 
 class MatchList:
     def __init__(self, *matches):
-        self.matches = list(matches)
+        self.matches = [Match("Ukraine", "Russia", 2, 0,
+                              "World Cup", 20, 10, 2016),
+                        Match("England", "Germany", 1, 2,
+                              "World Cup", 22, 10, 2016),
+                        Match("Spain", "Italy", 2, 2,
+                              "Euro2016", 5, 6, 2016)]
 
     def show(self):
         return tuple(self.matches)
 
-    def create(self, *args):
-        self.matches.append(Match(*args))
+    def create(self, team1, team2, score1, score2, tournament, dd, mm, yy):
+        self.matches.append(Match(team1, team2, score1, score2, tournament, dd, mm, yy))
         return self.matches[-1]
 
-    def edit(self, idx, *args):
+    def edit(self, idx, team1, team2, score1, score2, tournament, dd, mm, yy):
         try:
-            self.matches[idx] = Match(*args)
+            self.matches[idx] = Match(team1, team2, score1, score2, tournament, dd, mm, yy)
             return self.matches[idx]
         except IndexError:
             return None
@@ -70,9 +75,4 @@ match_history = None
 
 def init():
     global match_history
-    match_history = ctr(Match("Ukraine", "Russia", 2, 0,
-                              "World Cup", 20, 10, 2016),
-                        Match("England", "Germany", 1, 2,
-                              "World Cup", 22, 10, 2016),
-                        Match("Spain", "Italy", 2, 2,
-                              "Euro2016", 5, 6, 2016))
+    match_history = ctr()
