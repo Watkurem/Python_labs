@@ -1,4 +1,4 @@
-from Model import *
+from model import *
 
 
 def menu():

@@ -1,4 +1,7 @@
-from View import *
+#!/bin/python
+# -*- coding: utf-8 -*-
+
+from view import *
 
 
 def choose_menu():
