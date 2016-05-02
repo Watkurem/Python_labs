@@ -1,4 +1,4 @@
-from model import *
+import model
 
 
 def menu():
@@ -35,7 +35,7 @@ def show():
     2-2
     5.6.2016
     """
-    for match in match_history.show():
+    for match in model.match_history.show():
             print()
             print(match.tournament)
             print("{}-{}".format(match.team1, match.team2))
@@ -57,7 +57,7 @@ def create():
     dd = input(" Enter day :")
     mm = input(" Enter month :")
     yy = input(" Enter year :")
-    match_history.create(team1, team2, score1, score2, tournament, dd, mm, yy)
+    model.match_history.create(team1, team2, score1, score2, tournament, dd, mm, yy)
 
 
 def edit():
@@ -76,7 +76,7 @@ def edit():
     dd = input(" Day: ")
     mm = input(" Month: ")
     yy = input(" Year: ")
-    match_history.edit(op_id-1, team1, team2, score1, score2, tournament, dd, mm, yy)
+    model.match_history.edit(op_id-1, team1, team2, score1, score2, tournament, dd, mm, yy)
 
 
 def delete():
@@ -86,4 +86,4 @@ def delete():
     show()
     op_ch = " Enter number of operation what you want to delete:"
     op_id = int(input(op_ch))
-    match_history.delete(op_id-1)
+    model.match_history.delete(op_id-1)
