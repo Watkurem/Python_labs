@@ -65,9 +65,14 @@ class MatchList:
             return None
 
 
-match_history = MatchList(Match("Ukraine", "Russia", 2, 0,
-                                "World Cup", 20, 10, 2016),
-                          Match("England", "Germany", 1, 2,
-                                "World Cup", 22, 10, 2016),
-                          Match("Spain", "Italy", 2, 2,
-                                "Euro2016", 5, 6, 2016))
+match_history = None
+
+
+def init():
+    global match_history
+    match_history = ctr(Match("Ukraine", "Russia", 2, 0,
+                              "World Cup", 20, 10, 2016),
+                        Match("England", "Germany", 1, 2,
+                              "World Cup", 22, 10, 2016),
+                        Match("Spain", "Italy", 2, 2,
+                              "Euro2016", 5, 6, 2016))
