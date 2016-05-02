@@ -35,10 +35,12 @@ def show():
     2-2
     5.6.2016
     """
-    i = 0
-    while i < len(match_history):
-        match_history[i].print_match()
-        i += 1
+    for match in match_history.show():
+            print()
+            print(match.tournament)
+            print("{}-{}".format(match.team1, match.team2))
+            print("{}-{}".format(match.score1, match.score2))
+            print("{}.{}.{}".format(match.dd, match.mm, match.yy))
 
 
 def create():
@@ -55,8 +57,7 @@ def create():
     dd = input(" Enter day :")
     mm = input(" Enter month :")
     yy = input(" Enter year :")
-    match = Match(team1, team2, score1, score2, tournament, dd, mm, yy)
-    return match_history.append(match)
+    match_history.create(team1, team2, score1, score2, tournament, dd, mm, yy)
 
 
 def edit():
@@ -75,7 +76,7 @@ def edit():
     dd = input(" Day: ")
     mm = input(" Month: ")
     yy = input(" Year: ")
-    match_history[op_id-1] = Match(team1, team2, score1, score2, tournament, dd, mm, yy)
+    match_history.edit(op_id-1, team1, team2, score1, score2, tournament, dd, mm, yy)
 
 
 def delete():
@@ -85,4 +86,4 @@ def delete():
     show()
     op_ch = " Enter number of operation what you want to delete:"
     op_id = int(input(op_ch))
-    match_history.pop(op_id-1)
+    match_history.delete(op_id-1)
