@@ -45,3 +45,28 @@ match2 = Match("England", "Germany", 1, 2, "World Cup", 22, 10, 2016)
 match3 = Match("Spain", "Italy", 2, 2, "Euro2016", 5, 6, 2016)
 
 match_history = [match1, match2, match3]
+
+
+class MatchList:
+    def __init__(self, *matches):
+        self.matches = list(matches)
+
+    def show(self):
+        return tuple(self.matches)
+
+    def create(self, *args):
+        self.matches.append(Match(*args))
+        return self.matches[-1]
+
+    def edit(self, idx, *args):
+        try:
+            self.matches[idx] = Match(*args)
+            return self.matches[idx]
+        except IndexError:
+            return None
+
+    def delete(self, idx):
+        try:
+            return self.matches.pop(idx)
+        except IndexError:
+            return None
