@@ -40,18 +40,18 @@ def main():
             config.write(fil)
 
     if config['DEFAULT']['model'] == 'sqlite':
-        model.ctr = model.MatchSqliteDb
+        ctr = model.MatchSqliteDb
     elif config['DEFAULT']['model'] == 'mysql':
-        model.ctr = model.MatchMysqlDb
+        ctr = model.MatchMysqlDb
     elif config['DEFAULT']['model'] == 'postgresql':
-        model.ctr = model.MatchPostgresqlDb
+        ctr = model.MatchPostgresqlDb
     elif config['DEFAULT']['model'] == 'dummy':
-        model.ctr = model.MatchList
+        ctr = model.MatchList
     else:
         print('WARNING: Config is broken!')
         sys.exit(1)
 
-    model.init()
+    model.init(ctr)
     choose_menu()
 
 

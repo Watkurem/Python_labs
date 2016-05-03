@@ -201,6 +201,7 @@ class MatchMysqlDb(MatchList):
 match_history = None
 
 
-def init():
+def init(ctr):
+    """A dirty hack for legacy code integration."""
     global match_history
     match_history = ctr()
