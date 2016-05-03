@@ -260,6 +260,23 @@ class MatchSqliteDb(MatchMysqlDb):
         return tuple(matches)
 
 
+class MatchPostgresqlDb(MatchMysqlDb):
+    create_table_query = MatchMysqlDb.create_table_query.replace(
+        'INT NOT NULL AUTO_INCREMENT', 'SERIAL')
+
+    def __init__(self):
+        try:
+            self.conn = psycopg2.connect(
+                database='archlab', user='archlab',
+                cursor_factory=psycopg2.extras.DictCursor)
+        except sqlite3.Error as e:
+            print("Error %d: %s" % (e.args[0], e.args[1]))
+            sys.exit()
+
+    def _getcur(self):
+        return self.conn.cursor()
+
+
 match_history = None
 
 
