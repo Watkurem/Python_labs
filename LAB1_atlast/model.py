@@ -12,8 +12,10 @@ import psycopg2.extras
 class ScoreError(Exception):
     pass
 
+
 class DateError(Exception):
     pass
+
 
 class Match:
     def __init__(self, team1, team2, score1, score2, tournament, dd, mm, yy):
@@ -58,7 +60,7 @@ class Match:
 
 
 class MatchList:
-    def __init__(self, *matches):
+    def __init__(self):
         self.matches = [Match("Ukraine", "Russia", 2, 0,
                               "World Cup", 20, 10, 2016),
                         Match("England", "Germany", 1, 2,
@@ -118,7 +120,7 @@ class MatchMysqlDb(MatchList):
         try:
             self.conn = MySQLdb.connect('127.0.0.1', 'archlab', '', 'archlab')
         except MySQLdb.Error as e:
-            print("Error %d: %s" % (e.args[0],e.args[1]))
+            print("Error %d: %s" % (e.args[0], e.args[1]))
             sys.exit()
 
     def __del__(self):
