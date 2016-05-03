@@ -224,6 +224,42 @@ class MatchMysqlDb(MatchList):
         return match
 
 
+class MatchSqliteDb(MatchMysqlDb):
+    create_table_query = MatchMysqlDb.create_table_query.replace(
+        'NOT NULL AUTO_INCREMENT ', '')
+    select_query = MatchMysqlDb.select_query.replace('%s', '?')
+    insert_query = MatchMysqlDb.insert_query.replace('%s', '?')
+    update_query = MatchMysqlDb.update_query.replace('%s', '?')
+    delete_query = MatchMysqlDb.delete_query.replace('%s', '?')
+
+    def __init__(self):
+        try:
+            self.conn = sqlite3.connect('archlab.db')
+            self.conn.row_factory = sqlite3.Row
+        except sqlite3.Error as e:
+            print("Error %d: %s" % (e.args[0], e.args[1]))
+            sys.exit()
+
+    def _getcur(self):
+        return self.conn.cursor()
+
+    def show(self):
+        cur = self._getcur()
+        cur.execute(self.create_table_query)
+        cur.execute(self.select_query)
+        matches = []
+        for m in cur.fetchall():
+            matches.append(Match(m["team1"],
+                                 m["team2"],
+                                 m["score1"],
+                                 m["score2"],
+                                 m["tournament"],
+                                 m["date"][8:10],
+                                 m["date"][5:7],
+                                 m["date"][:4]))
+        return tuple(matches)
+
+
 match_history = None
 
 
