@@ -65,12 +65,14 @@ class MatchList:
         return tuple(self.matches)
 
     def create(self, team1, team2, score1, score2, tournament, dd, mm, yy):
-        self.matches.append(Match(team1, team2, score1, score2, tournament, dd, mm, yy))
+        self.matches.append(Match(team1, team2, score1,
+                                  score2, tournament, dd, mm, yy))
         return self.matches[-1]
 
     def edit(self, idx, team1, team2, score1, score2, tournament, dd, mm, yy):
         try:
-            self.matches[idx] = Match(team1, team2, score1, score2, tournament, dd, mm, yy)
+            self.matches[idx] = Match(team1, team2, score1, score2,
+                                      tournament, dd, mm, yy)
             return self.matches[idx]
         except IndexError:
             return None
