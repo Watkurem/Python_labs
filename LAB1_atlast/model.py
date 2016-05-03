@@ -10,10 +10,12 @@ import psycopg2.extras
 
 
 class ScoreError(Exception):
+    """An exception to raise if score was wrong."""
     pass
 
 
 class DateError(Exception):
+    """An exception to raise if date was wrong."""
     pass
 
 
@@ -60,7 +62,11 @@ class Match:
 
 
 class MatchList:
+    """A pretty basic 'dummy' class that encapsulates a list of matches.
+
+    Consider sublassing and extending it."""
     def __init__(self):
+        """Init with hard-coded data, so the class is not very useful."""
         self.matches = [Match("Ukraine", "Russia", 2, 0,
                               "World Cup", 20, 10, 2016),
                         Match("England", "Germany", 1, 2,
@@ -69,14 +75,46 @@ class MatchList:
                               "Euro2016", 5, 6, 2016)]
 
     def show(self):
+        """Fetch matches.
+
+        return: tuple of matches."""
         return tuple(self.matches)
 
     def create(self, team1, team2, score1, score2, tournament, dd, mm, yy):
+        """Create and store a new match.
+
+        team1: string - first team for Match constructor.
+        team2: string - second team for Match constructor.
+        score1: string - score of the first team for Match constructor.
+        score1: string - score of the second team for Match constructor.
+        tournament: string - name of the tournament.
+        dd: string - day when match was held for Match constructor.
+        mm: string - month when match was held for Match constructor.
+        yy: string - year when match was held for Match constructor.
+
+        return: Match that was successfully created or None if creation failed.
+        """
         self.matches.append(Match(team1, team2, score1,
                                   score2, tournament, dd, mm, yy))
         return self.matches[-1]
 
     def edit(self, idx, team1, team2, score1, score2, tournament, dd, mm, yy):
+        """Edit existing match.
+
+        Or replace it with a new one.
+
+        idx: match-to-edit position in tuple returned by show.
+        team1: string - first team for Match constructor.
+        team2: string - second team for Match constructor.
+        score1: string - score of the first team for Match constructor.
+        score1: string - score of the second team for Match constructor.
+        tournament: string - name of the tournament.
+        dd: string - day when match was held for Match constructor.
+        mm: string - month when match was held for Match constructor.
+        yy: string - year when match was held for Match constructor.
+
+        return: Match that was successfully edited or None if edit failed.
+        """
         try:
             self.matches[idx] = Match(team1, team2, score1, score2,
                                       tournament, dd, mm, yy)
@@ -85,6 +123,12 @@ class MatchList:
             return None
 
     def delete(self, idx):
+        """Delete existing match.
+
+        idx: match-to-delete position in tuple returned by show.
+
+        return: Deleted match (pop functionality) or None if deletion failed.
+        """
         try:
             return self.matches.pop(idx)
         except IndexError:
@@ -92,6 +136,7 @@ class MatchList:
 
 
 class MatchMysqlDb(MatchList):
+    """A MatchList implementation using MySQL database."""
     create_table_query = ('CREATE TABLE IF NOT EXISTS matches '
                           '(id INT NOT NULL AUTO_INCREMENT PRIMARY KEY, '
                           'team1 VARCHAR(100) NOT NULL, '
@@ -117,6 +162,12 @@ class MatchMysqlDb(MatchList):
                     'AND tournament = %s AND date = %s')
 
     def __init__(self):
+        """Open database connection.
+
+        Database server is assumed to be accessible on localhost (127.0.0.1),
+        database is assumed to be archlab, user is assumed to be archlab and
+        user's password is assumed to be empty.
+        """
         try:
             self.conn = MySQLdb.connect('127.0.0.1', 'archlab', '', 'archlab')
         except MySQLdb.Error as e:
@@ -124,9 +175,11 @@ class MatchMysqlDb(MatchList):
             sys.exit()
 
     def __del__(self):
+        """Close database connection."""
         self.conn.close()
 
     def _getcur(self):
+        """A private method that makes it easier to reuse code."""
         return self.conn.cursor(MySQLdb.cursors.DictCursor)
 
     def show(self):
@@ -231,6 +284,7 @@ class MatchMysqlDb(MatchList):
 
 
 class MatchSqliteDb(MatchMysqlDb):
+    """A MatchMysqlDb implementation modified for SQLite database."""
     create_table_query = MatchMysqlDb.create_table_query.replace(
         'NOT NULL AUTO_INCREMENT ', '')
     select_query = MatchMysqlDb.select_query.replace('%s', '?')
@@ -267,6 +321,7 @@ class MatchSqliteDb(MatchMysqlDb):
 
 
 class MatchPostgresqlDb(MatchMysqlDb):
+    """A MatchMysqlDb implementation modified for PostgreSQL database."""
     create_table_query = MatchMysqlDb.create_table_query.replace(
         'INT NOT NULL AUTO_INCREMENT', 'SERIAL')
 
