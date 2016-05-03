@@ -3,7 +3,11 @@
 import sys
 import warnings
 import datetime
+import sqlite3
 import MySQLdb
+import psycopg2
+import psycopg2.extras
+
 
 class ScoreError(Exception):
     pass
